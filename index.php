@@ -1,7 +1,7 @@
 <?php
 // Vérification hCAPTCHA côté serveur
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $secretKey = '0x0000000000000000000000000000000000000000'; // Replace with your hCAPTCHA secret key
+    $secretKey = 'ES_844a1111c873437f9c5468ac44d735fc'; // Replace with your hCAPTCHA secret key
     $captchaResponse = $_POST['h-captcha-response'];
 
     if (!empty($captchaResponse)) {
