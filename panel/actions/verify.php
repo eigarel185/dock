@@ -1,7 +1,7 @@
 <?php
 if (isset($_POST['h-captcha-response'])) {
     $data = [
-        'secret' => '0x6A02f88cbB249E280468c7f2840257968a57F147',
+        'secret' => 'ES_844a1111c873437f9c5468ac44d735fc', // hCAPTCHA secret key
         'response' => $_POST['h-captcha-response']
     ];
     

@@ -1,22 +1,36 @@
 <?php
-// Vérification reCAPTCHA côté serveur
+// Vérification hCAPTCHA côté serveur
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $secretKey = '6LfR6TMrAAAAABgG2LCAwXU3tOc1uIsTMm7SKwr8'; // Clé secrète Google reCAPTCHA
-    $recaptchaResponse = $_POST['g-recaptcha-response'];
+    $secretKey = '0x0000000000000000000000000000000000000000'; // Replace with your hCAPTCHA secret key
+    $captchaResponse = $_POST['h-captcha-response'];
 
-    if (!empty($recaptchaResponse)) {
-        $verifyUrl = 'https://www.google.com/recaptcha/api/siteverify';
-        $response = file_get_contents($verifyUrl . '?secret=' . $secretKey . '&response=' . $recaptchaResponse);
+    if (!empty($captchaResponse)) {
+        $verifyUrl = 'https://hcaptcha.com/siteverify';
+        $data = [
+            'secret' => $secretKey,
+            'response' => $captchaResponse
+        ];
+        
+        $options = [
+            'http' => [
+                'header' => "Content-type: application/x-www-form-urlencoded\r\n",
+                'method' => 'POST',
+                'content' => http_build_query($data)
+            ]
+        ];
+        
+        $context = stream_context_create($options);
+        $response = file_get_contents($verifyUrl, false, $context);
         $responseKeys = json_decode($response, true);
 
         if ($responseKeys['success']) {
-            header("Location: visit.php"); // Redirige vers la page visit.php après validation du reCAPTCHA
+            header("Location: visit.php"); // Redirige vers la page visit.php après validation du hCAPTCHA
             exit();
         } else {
-            $errorMessage = "La vérification reCAPTCHA a échoué, veuillez réessayer.";
+            $errorMessage = "La vérification hCAPTCHA a échoué, veuillez réessayer.";
         }
     } else {
-        $errorMessage = "Veuillez remplir le reCAPTCHA.";
+        $errorMessage = "Veuillez remplir le hCAPTCHA.";
     }
 }
 ?>
@@ -32,8 +46,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 
-    <!-- Google reCAPTCHA -->
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <!-- hCAPTCHA -->
+    <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
 
     <style>
         body {
@@ -87,7 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <p class="text-center">Bevestig alstublieft dat u geen robot bent.</p>
 
                 <div class="recaptcha-container">
-                    <div class="g-recaptcha" data-sitekey="6LfR6TMrAAAAANqrCHYPMo-gw_kN31x5quJDqwXp"></div>
+                    <div class="h-captcha" data-sitekey="8934d878-ca12-4294-84b0-c9b0496ce70c"></div>
                 </div>
 
                 <br>
