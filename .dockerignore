@@ -1,0 +1,26 @@
+# Git files
+.git
+.gitignore
+
+# Docker files
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+
+# Editor files
+.vscode
+.idea
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Dependency directories that should be installed in the container
+vendor/
+node_modules/
